@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
 /**
- * Logic class for tic-tac-toe game and this class also use to updates board.
+ * The model class for tic-tac-toe game that included logic of this game and updates board view also.
  */
 public class TicTacToeGame {
 	private final int boardsize;
