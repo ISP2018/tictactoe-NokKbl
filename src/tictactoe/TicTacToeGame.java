@@ -21,6 +21,10 @@ public class TicTacToeGame {
 
 	private Player nextPlayer = Player.X;
 
+	/**
+	 * Initialize value and start tic-tac-toe game.
+	 * @param size is a size of board.
+	 */
 	public TicTacToeGame(int size) {
 		this.boardsize = size;
 		board = new Board(boardsize, boardsize); // view of the gameboard
@@ -29,6 +33,10 @@ public class TicTacToeGame {
 		startNewGame();
 	}
 
+	/**
+	 * Get the board.
+	 * @return tic-tac-toe board
+	 */
 	public Board getBoard() {
 		return board;
 	}
@@ -63,26 +71,19 @@ public class TicTacToeGame {
 	 * Place a piece at a given (row,col) on the game board. It is up to the caller
 	 * to make sure that the cell can be occupied before calling moveTo.
 	 * 
-	 * @param piece
-	 *            the piece to place
-	 * @param row
-	 *            board row to move to
-	 * @param col
-	 *            board column to move to
+	 * @param piece the piece to place
+	 * @param row board row to move to
+	 * @param col board column to move to
 	 */
 	public void moveTo(Piece piece, int col, int row) {
-		assert canMoveTo(piece.type, col, row) : String.format("moveTo(%s,%d,%d) is invalid", piece.toString(), row,
-				col);
-		if (!canMoveTo(piece.type, col, row))
-			return; // not reached when assertions enabled
+		assert canMoveTo(piece.type, col, row) : String.format("moveTo(%s,%d,%d) is invalid", piece.toString(), row, col);
+		if (!canMoveTo(piece.type, col, row)) return; // not reached when assertions enabled
 		pieces[row][col] = piece;
 		board.add(piece, col, row); // GridPane.add has column param before row param
 
 		/** next player's turn to move. */
-		if (piece.type == Player.X)
-			nextPlayer = Player.O;
-		else
-			nextPlayer = Player.X;
+		if (piece.type == Player.X) nextPlayer = Player.O;
+		else nextPlayer = Player.X;
 		/** after each move check if board is full */
 		/** check if someone won the game **/
 		if (boardIsFull() || winner() != Player.NONE) gameOver.set(true);
@@ -100,8 +101,7 @@ public class TicTacToeGame {
 		// Look for N matching pieces on same row.
 		rowtest: for (int row = 0; row < boardsize; row++) {
 			Player p = pieces[row][0].type;
-			if (p == Player.NONE)
-				continue;
+			if (p == Player.NONE) continue;
 			for (int col = 1; col < boardsize; col++) {
 				if (pieces[row][col].type != p)
 					continue rowtest;
@@ -112,14 +112,14 @@ public class TicTacToeGame {
 		// Look for N matching pieces on same column
 		coltest: for (int col = 0; col < boardsize; col++) {
 			Player p = pieces[0][col].type;
-			if (p == Player.NONE)
-				continue;
+			if (p == Player.NONE) continue;
 			for (int row = 1; row < boardsize; row++) {
 				if (pieces[row][col].type != p)
 					continue coltest;
 			}
 			return p;
 		}
+		
 		// Look for N matching pieces on downward diagonal.
 		Player p = pieces[0][0].type;
 		int count = 0;
