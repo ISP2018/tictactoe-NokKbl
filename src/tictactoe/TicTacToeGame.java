@@ -51,8 +51,11 @@ public class TicTacToeGame {
 	 * @return true if can move to the requested (col,row) on board.
 	 */
 	public boolean canMoveTo(Player player, int col, int row) {
-		if (row < 0 || row > pieces.length) return false;
-		if (col < 0 || col > pieces[row].length) return false;
+		if (row<0 || row>pieces.length) return false;
+		if (col<0 || col>pieces[row].length) return false;
+		// no move allowed after the game is over!
+		if(isGameOver()) return false;
+		// check if the square is empty
 		return pieces[row][col] == null || pieces[row][col] == Piece.NONE;
 	}
 
@@ -81,9 +84,8 @@ public class TicTacToeGame {
 		else
 			nextPlayer = Player.X;
 		/** after each move check if board is full */
-		if (boardIsFull())
-			gameOver.set(true);
-
+		/** check if someone won the game **/
+		if (boardIsFull() || winner() != Player.NONE) gameOver.set(true);
 	}
 
 	/**
@@ -120,32 +122,25 @@ public class TicTacToeGame {
 		}
 		// Look for N matching pieces on downward diagonal.
 		Player p = pieces[0][0].type;
-//		if (p != Player.NONE && p == pieces[1][1].type && p == pieces[2][2].type && p == pieces[3][3].type) {
-//			// all pieces on diagonal occupied by same type (Player)
-//			return p;
-//		}
 		int count = 0;
 		if (p != Player.NONE) {
 			for (int i = 1; i < this.boardsize; i++) {
 				if(p == pieces[i][i].type) count++;
 			}
-			
+			// all pieces on diagonal occupied by same type (Player)
 			if(count == this.boardsize-1) return p;
 		}
 
 		// Look for N matching pieces on upward diagonal
 		p = pieces[0][this.boardsize-1].type; // start at lower-left corner
-		if (p != Player.NONE && p == pieces[1][2].type && p == pieces[2][1].type && p == pieces[3][0].type) {
+		count = 0;
+		if(p != Player.NONE) {
+			for(int j = 1; j < this.boardsize; j++) {
+				if(p == pieces[j][this.boardsize-(j+1)].type) count++;
+			}
 			// all pieces on diagonal occupied by same type (Player)
-			return p;
+			if(count == this.boardsize-1) return p;
 		}
-//		if(p != Player.NONE) {
-//			for(int i = 0; i < this.boardsize; i++) {
-//				if(p == pieces[])
-//			}
-//		}
-		
-		
 		return Player.NONE;
 	}
 
