@@ -18,9 +18,6 @@
 	<!-- lib.dir contains JUnit libraries -->
 	<property name="lib.dir" value="lib" /> 
 
-    <!-- TODO Replace constants "src", "bin", "bin/test", "test", "lib", "."
-              in the following rules with the properties named above
-     -->
 
 	<path id="test.classpath">
 		<!-- include all Jars in the lib directory (for JUnit) -->
@@ -48,6 +45,7 @@
 
 	<target name="clean" description="Delete build products and build directory">
 	   <delete dir="${build.dir}" />
+	   <delete dir="${test.build.dir}" />
 	</target>
 
 	<!-- create the build directory for output -->
@@ -60,7 +58,7 @@
 	<target name="compile" depends="init" description="Compile source code" >
 		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" />
 		    <!-- copy fxml files from src tree to build tree, including subdirs -->
-		    <copy todir="dist">
+		    <copy todir="${build.dir}">
 		       <fileset dir="${src.dir}">
 		          <include name="**/*.fxml" />
 		       </fileset>
