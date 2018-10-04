@@ -2,6 +2,8 @@
 
 ### Description
 
+[Travis CI build](https://travis-ci.com/NokKbl/tictactoe):[![Build Status](https://travis-ci.com/NokKbl/tictactoe.svg?branch=master)](https://travis-ci.com/NokKbl/tictactoe)
+
 A tic-tac-toe game written using JavaFX.
 
 | Class  | Responsibility              |
